@@ -1,8 +1,13 @@
 # Notes
 
+Prepare hardware
+* create sd card with raspbian
+* create ssh file in boot directory
+* if applicable create a wpa_supplicant file
+
 First steps - provisioning with ansible.
 
-Can you make a playbook that has 'commandline parameters'
+Can you make a playbook that has 'commandline parameters'?
 
 * change hostname
 * Install keys
