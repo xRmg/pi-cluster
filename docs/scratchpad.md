@@ -28,3 +28,13 @@ Connect with new hostname & keys
 Ready to put in cluster. 
  * config kubernetes
  * 
+
+
+Ansible hosts file for unprovisioned
+
+[unprovisioned]
+raspberrypi
+
+[unprovisioned:vars]
+ansible_ssh_user=pi
+

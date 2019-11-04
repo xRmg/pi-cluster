@@ -1,0 +1,44 @@
+---
+- hosts: unprovisioned
+  vars:
+    pi_newhostname: "{{ newhostname }}"
+   
+  tasks:
+  - name: deploy ssh-keys
+    authorized_key:
+      user: pi
+      state: present
+      key: "{{ lookup('file', '../keys/ansible-pi.pub') }}"
+
+  - name: Debug message new hostname
+    debug:
+      msg:
+      - "Changing hostname to: {{ pi_newhostname }}"
+  
+  - name: Change the hostname
+    become: yes
+    hostname: 
+      name: "{{ pi_newhostname }}"
+  
+  - name: Update hostsfile
+    become: yes
+    lineinfile:
+      dest: /etc/hosts
+      regexp: "^127.0.1.1\traspberrypi$"
+      line: "127.0.1.1\t{{ pi_newhostname }}"
+      state: present
+
+  - name: Disable SSH password authentication
+    become: yes
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "^PasswordAuthentication"
+      line: "PasswordAuthentication no"
+      state: present
+
+  - name: Reboot raspberry pi 
+    become: yes
+    shell: sleep 5 && shutdown -r now "Reboot triggered by Ansible"
+    async: 1
+    poll: 0
+    
