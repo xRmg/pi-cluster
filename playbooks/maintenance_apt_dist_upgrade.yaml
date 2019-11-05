@@ -1,0 +1,16 @@
+---
+- hosts: all, !unprovisioned
+  tasks:
+    - name: Run apt dist_upgrade
+      become: yes
+      apt:
+        upgrade: dist
+        update_cache: yes
+
+    - name: Reboot system if required
+      become: yes
+      shell: sleep 5 && shutdown -r now "Reboot triggered by Ansible"
+      args:
+        removes: "/var/run/reboot-required"
+      async: 1
+      poll: 0
