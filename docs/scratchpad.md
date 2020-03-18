@@ -7,7 +7,7 @@ Prepare hardware
 
 First steps - provisioning with ansible.
 
-Can you make a playbook that has 'commandline parameters'?
+ansible-play
 
 * change hostname
 * Install keys
@@ -37,4 +37,26 @@ raspberrypi
 
 [unprovisioned:vars]
 ansible_ssh_user=pi
+ansible_ssh_pass=raspberry
 
+run the provisioning playbook
+
+
+
+
+ansible cluster -m shell -a 'printf $(sudo blkid -o export /dev/sda1|grep UUID)" /data/glusterfs/cluster_volume/brick1 xfs defaults,noatime 1 2\n" | sudo tee -a /etc/fstab'
+
+ansible cluster -m shell -a 'sudo mount -a' 
+
+ansible cluster -m shell -a 'sudo gluster volume create cluster_volume replica 4 tethys:/data/glusterfs/cluster_volume/brick1/brick titan:/data/glusterfs/cluster_volume/brick1/brick ganymede:/data/glusterfs/cluster_volume/brick1/brick'
+
+sudo gluster volume create cluster_volume replica 4 tethys:/data/glusterfs/cluster_volume/brick1/brick titan:/data/glusterfs/cluster_volume/brick1/brick ganymede:/data/glusterfs/cluster_volume/brick1/brick
+
+sudo gluster volume create cluster_volume replica 3 tethys:/data/glusterfs/cluster_volume/brick1/brick titan:/data/glusterfs/cluster_volume/brick1/brick ganymede:/data/glusterfs/cluster_volume/brick1/brick
+
+mkdir /mnt/gluster_data
+  
+   
+ansible cluster -m shell -a 'sudo mkdir /mnt/gluster_data && sudo mount -t glusterfs localhost:/cluster_volume /mnt/gluster_data/'
+   
+ansible cluster -m shell -a 'echo "localhost:/cluster_volume /mnt/gluster_data/ nfs defaults,_netdev,vers=3 0 0" | sudo tee -a /etc/fstab'
