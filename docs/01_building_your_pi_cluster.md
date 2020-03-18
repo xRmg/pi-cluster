@@ -1,15 +1,14 @@
 # Building your Raspberry Pi Cluster
 
-In this series i'm going to explore and document the setup of my raspberry pi cluster. This guide is not a beginner RPi guide and does expect some linux knowledge.
+In this two parter i'm going to explore and document the setup of my raspberry pi cluster. This guide is not a beginner RPi guide and does expect some linux knowledge.
 
-The topics in this howto will be how to provision and manage your cluster with Ansible, how to set up GlusterFS in replication mode for shared data over nodes, and it will uses Kubernetes & Docker runtime for application deployment over your cluster.
+The topics in this howto will be how to provision and manage your cluster with Ansible and to set up docker swarm.
 
 But first a list of ingredients.
 
 ## Ingredients
 * 4x Raspberry pi 4 (4gb)
 * 4x Verbatim SDCard (16GB)
-* 4x Verbatim NanoStor USB drive (64GB)
 * 1x Anker Powerport (12A)
 * 1x TL-SG105 - 5 port gigabit switch.
 
