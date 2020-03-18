@@ -15,12 +15,18 @@ But first a list of ingredients.
 A linux box to configure this all from.
 
 ## Preparing your Raspberry Pi's
-
+<img src="https://raw.githubusercontent.com/xRmg/pi-cluster/master/docs/images/RPi-Logo-Reg-SCREEN-199x250.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px; width: 100px; height: auto;" />
 First thing to do is flash the SDCards with the [lastest](https://www.raspberrypi.org/downloads/raspbian/) Raspbian distribution. Follow the instructions on the Raspberry Pi website and flash with BalenaEtcher, do not forget to create a ssh file in your boot partition to [enable SSH](https://www.raspberrypi.org/documentation/remote-access/ssh/).
 
-After flashing the SDCards and creating the ssh file in the boot partitionm  hook the pi's up to the ethernet switch. (Do not power them on yet.)
+After flashing the SDCards and creating the ssh file in the boot partition, hook the pi's up to the ethernet switch. (Do not power them on yet.)
 
 ## Introducing Ansible.
+
+<img src="https://raw.githubusercontent.com/xRmg/pi-cluster/master/docs/images/ansible.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px; background: white;"/>
 
 [Ansible](https://www.ansible.com/) is an open-source IT automation engine, with Ansible you can automatically execute tasks on nodes over SSH. We currently have 4 raspberry pi's that are in their default state, the hostname for all of them is raspberrypi, the login is raspberry, ssh password authentication is enabled. All stuff we would like to change. We could do this manually, login over ssh, do the changes and login in the next, but this is tedious and fault sensitive. 
 
