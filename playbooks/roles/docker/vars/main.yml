@@ -1,0 +1,11 @@
+---
+# vars file for docker
+
+  apt_deps:
+    - git
+    - apt-transport-https
+    - ca-certificates
+    - wget
+    - software-properties-common
+    - gnupg2
+    - curl

@@ -1,0 +1,53 @@
+---
+# tasks file for docker
+- name: Install dependency packages for adding HTTPS repos
+  become: yes
+  apt:
+    name: "{{ apt_deps }}"
+
+- name: Add official docker repo key
+  become: yes
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+  
+- name: Add docker repo
+  become: yes
+  apt_repository: 
+    repo: deb [arch=armhf] https://download.docker.com/linux/debian "{{ ansible_distribution_release }}" stable
+    state: present
+    update_cache: yes
+
+- name: Run apt-get update
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: install docker & docker compose
+  become: yes
+  apt:
+    install_recommends:  no
+    pkg: 
+    -  docker-ce
+    -  docker-compose
+  state: present
+  
+- name: 'enable docker systemd service'
+  become: yes
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Ensure 'docker' group exists
+  become: yes
+  group:
+    name: docker
+    state: present
+    
+- name: Add the 'pi' user to Docker group
+  become: yes
+  user:
+    name: pi
+    groups: docker
+    append: yes
