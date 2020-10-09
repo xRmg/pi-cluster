@@ -1,6 +1,6 @@
 # Building your Raspberry Pi Cluster
 
-In this two parter i'm going to explore and document the setup of my raspberry pi cluster. This guide is not a beginner RPi guide and does expect some linux knowledge.
+I'm going to explore and document the setup of my raspberry pi cluster. This guide is not a beginner RPi guide and does expect some linux knowledge.
 
 The topics in this howto will be how to provision and manage your cluster with Ansible and to set up docker swarm.
 
@@ -123,5 +123,26 @@ raspberrypi_4 | SUCCESS => {
 ![Pi cluster](images/pi-cluster.jpg)
 
 
-The next part will cover installing docker (with ansible), initalizing the docker swarm and deploying some containers on it.
+After your whole cluster is reachable run the second playbook like:
  
+ run `ansible-playbook playbooks/02_setup_roles.yaml` this will install docker on the cluster.
+ 
+ 
+ When this is finished without errors it is time to create the Docker swarm and join it.
+ 
+ On the host, initialize the docker swarm by running `docker swarm init` and you will get a docker swarm token. 
+ 
+ execute the docker join command on all the host with ansible  `ansible cluster -m shell -a 'docker swarm join --token SWMTKN-1-2rok9rdutcakeenetyrx9d0eqm8itbz8ajfhb8zi48rngsmfcs-4w7tnuga3my15hpjb4pree2bp 192.168.178.54:2377 --advertise-addr eth0'`
+ 
+ And check the status of your swarm with 
+ 
+ `docker node ls` to see all the nodes you have in your docker swarm 
+ 
+ ```rmg@gen8:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+icz3g1o48fs2kp3e0t5ol40za     atlas               Ready               Active                                  19.03.6
+x7uqct8j780jqnk3chip55sb4     ganymede            Ready               Active                                  19.03.6
+z91sgwtlxtmh0ezk5v6emjxm2 *   gen8                Ready               Active              Leader              19.03.13
+q98iuqbk4w4bfncvxyy2z27op     tethys              Ready               Active                                  19.03.6
+zf4mckfqgep4l820mwvcgqzdr     titan               Ready               Active                                  19.03.6
+```
