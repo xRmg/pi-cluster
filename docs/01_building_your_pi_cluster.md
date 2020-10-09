@@ -146,3 +146,5 @@ z91sgwtlxtmh0ezk5v6emjxm2 *   gen8                Ready               Active    
 q98iuqbk4w4bfncvxyy2z27op     tethys              Ready               Active                                  19.03.6
 zf4mckfqgep4l820mwvcgqzdr     titan               Ready               Active                                  19.03.6
 ```
+
+Now you are ready to deploy stuff on your swarm! go read about it here:https://docs.docker.com/get-started/swarm-deploy/
